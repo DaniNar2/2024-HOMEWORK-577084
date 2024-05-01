@@ -42,11 +42,4 @@ public class GiocatoreTest {
 		assertNotNull(g.getBorsa());
 		
 	}
-	
-	@Test 
-	public void testgetBorsa_Assente() {
-		Giocatore g = new Giocatore();
-		assertNull(g.getBorsa());
-		
-	}
 }

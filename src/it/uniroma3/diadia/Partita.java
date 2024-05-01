@@ -69,6 +69,12 @@ public class Partita {
 	public void setFinita() {
 		this.finita = true;
 	}
-
 	
+	public boolean giocatoreIsVivo() {
+		boolean vivo = true;
+		if(this.giocatore.getCfu() == 0) {
+			vivo = false;
+		}
+		return vivo;
+	}
 }
