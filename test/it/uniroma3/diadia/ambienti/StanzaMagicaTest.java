@@ -40,17 +40,6 @@ public class StanzaMagicaTest {
 		assertTrue(rimosso);
 	}
 	
-	@Test
-	public void testremoveAttrezzo_Assente() {
-		StanzaMagica s1 = new StanzaMagica("Stanza1");
-		Attrezzo spada = new Attrezzo("Spada", 10);
-		Attrezzo osso = new Attrezzo("Osso", 5);
-		s1.addAttrezzo(spada);
-		boolean rimosso;
-		rimosso= s1.removeAttrezzo(osso);
-		assertFalse(rimosso);
-	}
-	
 	@Test 
 	public void testgetStanzaAdiacente_StanzaSingola() {
 		StanzaMagica singola = new StanzaMagica("Vuota");

@@ -18,6 +18,7 @@ public class StanzaBloccataTest {
 		assertEquals(sb, sb.getStanzaAdiacente("nord"));
 	}
 	
+	@Test
 	public void testgetStanzaAdiacente_StanzaSbloccata() {
 		Stanza sb  = new StanzaBloccata("StanzaBloccata", "nord", "Tool");
 		Stanza s = new Stanza("Stanza");
@@ -28,6 +29,7 @@ public class StanzaBloccataTest {
 		assertEquals(s, sb.getStanzaAdiacente("nord"));
 	}
 	
+	@Test
 	public void testgetDescrizione_StanzaBloccata() {
 		Stanza sb  = new StanzaBloccata("StanzaBloccata", "nord", "Tool");
 		Stanza s = new Stanza("Stanza");
@@ -38,6 +40,7 @@ public class StanzaBloccataTest {
 		assertEquals(e, sb.getDescrizione());
 	}
 	
+	@Test
 	public void testgetDescrizione_StanzaSbloccata() {
 		Stanza sb  = new StanzaBloccata("StanzaBloccata", "nord", "Tool");
 		Stanza s = new Stanza("Stanza");

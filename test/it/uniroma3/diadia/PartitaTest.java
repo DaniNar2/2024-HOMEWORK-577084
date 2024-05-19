@@ -46,7 +46,7 @@ public class PartitaTest {
 	}
 	
 	@Test
-	public void testGetStanzaCorrente() {
+	public void testgetStanzaCorrente() {
 		Labirinto l = new Labirinto();
 		Partita p = new Partita(l);
 		assertEquals("Atrio", p.getStanzaCorrente().getNome());

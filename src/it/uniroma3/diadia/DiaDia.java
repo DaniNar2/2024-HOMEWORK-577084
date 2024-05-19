@@ -1,12 +1,11 @@
 package it.uniroma3.diadia;
 
+
+
 import it.uniroma3.diadia.ambienti.Labirinto;
-import it.uniroma3.diadia.ambienti.Stanza;
-import it.uniroma3.diadia.attrezzi.Attrezzo;
+import it.uniroma3.diadia.ambienti.LabirintoBuilder;
 import it.uniroma3.diadia.comandi.Comando;
-import it.uniroma3.diadia.comandi.FabbricaDiComandi;
 import it.uniroma3.diadia.comandi.FabbricaDiComandiFisarmonica;
-import it.uniroma3.diadia.giocatore.Giocatore;
 
 /**
  * Classe principale di diadia, un semplice gioco di ruolo ambientato al dia.
@@ -14,7 +13,7 @@ import it.uniroma3.diadia.giocatore.Giocatore;
  *
  * Questa e' la classe principale crea e istanzia tutte le altre
  *
- * @author  docente di POO 
+ * @author  docente di POO & 548019 & 547388
  *         (da un'idea di Michael Kolling and David J. Barnes) 
  *          
  * @version base
@@ -22,7 +21,7 @@ import it.uniroma3.diadia.giocatore.Giocatore;
 
 public class DiaDia {
 
-	static final private String MESSAGGIO_BENVENUTO = ""+
+	static final public String MESSAGGIO_BENVENUTO = ""+
 			"Ti trovi nell'Universita', ma oggi e' diversa dal solito...\n" +
 			"Meglio andare al piu' presto in biblioteca a studiare. Ma dov'e'?\n"+
 			"I locali sono popolati da strani personaggi, " +
@@ -31,58 +30,92 @@ public class DiaDia {
 			"puoi raccoglierli, usarli, posarli quando ti sembrano inutili\n" +
 			"o regalarli se pensi che possano ingraziarti qualcuno.\n\n"+
 			"Per conoscere le istruzioni usa il comando 'aiuto'.";
-	
+
 	private Partita partita;
-	private Labirinto labirinto;
-	private Giocatore giocatore;
 	private IO io;
 
-	public DiaDia() {
-		this.labirinto = new Labirinto();
-		this.partita = new Partita(this.labirinto);
-		this.io = new IOConsole();
-	}
-
-	public DiaDia(IO console) {
+	public DiaDia(IO console, Labirinto labirinto) {
 		this.io = console;
-		this.labirinto = new Labirinto();
-		this.partita = new Partita(this.labirinto);
+		this.partita = new Partita(labirinto);
 	}
 
 	public void gioca() {
-		
-		String istruzione;
+		String istruzione; 
+		io.mostraMessaggio(MESSAGGIO_BENVENUTO);
+		do {
+			istruzione = io.leggiRiga();
 
-		this.io.mostraMessaggio(MESSAGGIO_BENVENUTO);
-		
-		do	
-			istruzione = this.io.leggiRiga();
-		while (!processaIstruzione(istruzione));
+		}while (!processaIstruzione(istruzione) );
+
 	}   
 
-
-	/**
+	/**System.in
 	 * Processa una istruzione 
 	 *
 	 * @return true se l'istruzione e' eseguita e il gioco continua, false altrimenti
 	 */
-	
 	private boolean processaIstruzione(String istruzione) {
 		Comando comandoDaEseguire;
-		FabbricaDiComandi factory = new FabbricaDiComandiFisarmonica();
+		FabbricaDiComandiFisarmonica factory = new FabbricaDiComandiFisarmonica(this.io);
 		comandoDaEseguire = factory.costruisciComando(istruzione);
 		comandoDaEseguire.esegui(this.partita);
 		if (this.partita.vinta())
-			this.io.mostraMessaggio("Hai vinto!");
+			io.mostraMessaggio("Hai vinto!");
 		if (!this.partita.giocatoreIsVivo())
-			this.io.mostraMessaggio("Hai esaurito i CFU...");
+			io.mostraMessaggio("Hai esaurito i CFU...");
 		return this.partita.isFinita();
 	}
 
 	public static void main(String[] argc) {
-		IO io = new IOConsole();
-		DiaDia gioco = new DiaDia(io);
-		gioco.gioca();
+		IO console = new IOConsole();
+		Labirinto labirinto = new LabirintoBuilder()
+										.addStanzaIniziale("Atrio")
+										.addAttrezzo("martello", 3)
+										.addStanzaVincente("Biblioteca")
+										.addAdiacenza("Atrio", "Biblioteca", "nord")
+										.getLabirinto();
 		
+		Labirinto monolocale = new LabirintoBuilder()
+										.addStanzaIniziale("Salotto")
+										.addAttrezzo("candelabro", 5)
+										.addStanzaVincente("Salotto")
+										.getLabirinto();
+		
+		Labirinto bilocale = new LabirintoBuilder()
+										.addStanzaIniziale("Salotto")
+										.addStanzaVincente("Camera")
+										.addAttrezzo("letto",10)
+										.addAdiacenza("Salotto", "Camera", "nord")
+										.getLabirinto();
+		
+		Labirinto trilocale = new LabirintoBuilder()
+										.addStanzaIniziale("Salotto")
+										.addStanza("Cucina")
+										.addAttrezzo("pentola",1) 
+										.addStanzaVincente("Camera")
+										.addAdiacenza("Salotto", "Cucina", "nord")
+										.addAdiacenza("Cucina", "Camera", "est")
+										.getLabirinto(); 
+				
+		DiaDia gioco1 = new DiaDia(console, labirinto);
+		DiaDia gioco2 = new DiaDia(console, monolocale);
+		DiaDia gioco3 = new DiaDia(console, bilocale);
+		DiaDia gioco4 = new DiaDia(console, trilocale);
+		
+		console.mostraMessaggio("Scegli il tipo di gioco che vuoi: labirinto, monolocale, bilocale, trilocale");
+		String ans = console.leggiRiga();
+		if(ans.equals("monolocale")) {
+			gioco2.gioca();
+		}
+		if(ans.equals("bilocale")) {
+			gioco3.gioca();
+		}
+		if(ans.equals("trilocale")) {
+			gioco4.gioca();
+		}
+		if(ans.equals("labirinto")) {
+			gioco1.gioca();
+		}
 	}
 }
+

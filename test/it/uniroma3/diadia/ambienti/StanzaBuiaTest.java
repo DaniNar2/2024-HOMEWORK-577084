@@ -17,6 +17,7 @@ public class StanzaBuiaTest {
 		assertEquals(e, buia.getDescrizione());
 	}
 	
+	@Test
 	public void testgetDescrizione_StanzaIlluminata() {
 		Stanza buia = new StanzaBuia("StanzaBuia", "Torcia");
 		Attrezzo luce = new Attrezzo("Torcia", 2);
