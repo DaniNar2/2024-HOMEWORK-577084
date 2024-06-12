@@ -1,0 +1,11 @@
+Stanze:Salotto,Cucina,Bagno,Studio
+Magica:
+Buia:
+Bloccata:  
+Inizio:Salotto
+Vincente:Cucina
+Mago:
+Cane:Bagno Pluto WoofWoof!
+Strega:
+Attrezzi:Candelabro 5 Studio,Pentola 2 Cucina,Phon 1 Bagno
+Uscite:Salotto nord Studio,Salotto est Bagno,Studio sud Salotto,Bagno ovest Salotto,Bagno est Cucina,Cucina ovest Bagno

@@ -1,54 +1,45 @@
 package it.uniroma3.diadia;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
+import java.io.FileNotFoundException;
+
+import org.junit.Before;
 import org.junit.Test;
 
 import it.uniroma3.diadia.ambienti.Labirinto;
 import it.uniroma3.diadia.ambienti.Stanza;
-import it.uniroma3.diadia.giocatore.Giocatore;
 
 public class PartitaTest {
 
-	@Test
-	public void testvinta_Vinta() {
-		
-		boolean vinta;
-		Labirinto labirinto = new Labirinto();
-		Partita p = new Partita(labirinto);
-		Stanza vincente = labirinto.getStanzaVincente();
-		Stanza corrente = vincente;
-		p.setStanzaCorrente(corrente);
-		vinta = p.vinta();
-		assertTrue(vinta);
-		
+	Labirinto labirinto;
+	Partita p;
+	Stanza s;
+
+	@Before
+	public void setUp() throws FileNotFoundException, FormatoFileNonValidoException {
+		 labirinto = Labirinto.newBuilder("monolocale.txt").getLabirinto();
+
+		 p = new Partita(labirinto);
+		 s = new Stanza("Stanza");
 	}
 	
 	@Test
-	public void testvinta_NonVinta() {
+	public void testGetStanzaVincente() {
+		assertEquals("Biblioteca", p.getLabirinto().getStanzaVincente().getNome());
+	}
+
+	@Test
+	public void testSetStanzaCorrente() {
+		p.getLabirinto().setStanzaCorrente(s);
+		assertEquals(s, p.getLabirinto().getStanzaCorrente());
+	}
+
+	@Test
+	public void testIsFinita() {
 		
-		boolean vinta;
-		Labirinto labirinto = new Labirinto();
-		Partita p = new Partita(labirinto);
-		Stanza corrente = new Stanza("Corrente");
-		p.setStanzaCorrente(corrente);
-		vinta = p.vinta();
-		assertFalse(vinta);
+		assertFalse(p.isFinita());
 	}
 	
-	@Test
-	public void testsetStanzaCorrente() {
-		Labirinto l = new Labirinto();
-		Partita p = new Partita(l);
-		Stanza DS1 = new Stanza("DS1");
-		p.setStanzaCorrente(DS1);
-		assertEquals(DS1, p.getStanzaCorrente());
-	}
-	
-	@Test
-	public void testgetStanzaCorrente() {
-		Labirinto l = new Labirinto();
-		Partita p = new Partita(l);
-		assertEquals("Atrio", p.getStanzaCorrente().getNome());
-	}
 }

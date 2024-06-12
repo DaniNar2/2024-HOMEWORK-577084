@@ -21,7 +21,7 @@ public class StanzaMagica extends Stanza {
 	}
 
 
-	public Attrezzo modificaAttrezzo(Attrezzo attrezzo) {
+	private Attrezzo modificaAttrezzo(Attrezzo attrezzo) {
 		StringBuilder nomeInvertito;
 		int pesoX2 = attrezzo.getPeso() * 2;
 		nomeInvertito = new StringBuilder(attrezzo.getNome());

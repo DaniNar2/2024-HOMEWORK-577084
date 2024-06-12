@@ -1,7 +1,6 @@
 package it.uniroma3.diadia.ambienti;
 
 import it.uniroma3.diadia.attrezzi.Attrezzo;
-import java.util.*;
 
 public class StanzaMagicaProtected extends StanzaProtected{
 

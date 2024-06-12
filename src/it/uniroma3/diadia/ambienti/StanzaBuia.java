@@ -12,7 +12,7 @@ public class StanzaBuia extends Stanza {
 	@Override
 	public String getDescrizione() {
 		String buio = new String();
-		buio = "Qui c'è un buio pesto";
+		buio = "qui c'è un buio pesto";
 		if(!this.hasAttrezzo(attrezzoLucente))
 			return buio;
 		return super.getDescrizione();

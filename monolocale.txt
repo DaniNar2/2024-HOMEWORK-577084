@@ -1,0 +1,11 @@
+Stanze:Atrio
+Magica:
+Buia:
+Bloccata:  
+Inizio:Atrio
+Vincente:Atrio
+Mago:
+Cane:
+Strega:
+Attrezzi:Seghetto 3 Atrio
+Uscite:

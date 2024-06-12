@@ -1,54 +1,55 @@
 package it.uniroma3.diadia.ambienti;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import it.uniroma3.diadia.attrezzi.Attrezzo;
 
 public class StanzaBloccataTest {
 
-	@Test
-	public void testgetStanzaAdiacente_StanzaBloccata() {
-		Stanza sb  = new StanzaBloccata("StanzaBloccata", "nord", "Tool");
-		Stanza s = new Stanza("Stanza");
-		Attrezzo sbloccante = new Attrezzo("Tool", 1);
-		sb.impostaStanzaAdiacente("nord", s);
+	private StanzaBloccata sb;
+	private Stanza s;
+	private Attrezzo a;
+	
+	@Before
+	public void setUp() throws Exception {
+		sb = new StanzaBloccata("StanzaBloccata", Direzione.ovest, "grimaldello");
+		s = new Stanza("Stanzetta");
+		a = new Attrezzo("grimaldello", 1);
+		sb.impostaStanzaAdiacente(Direzione.ovest, s);
 		
-		assertEquals(sb, sb.getStanzaAdiacente("nord"));
+	}
+
+	@After
+	public void tearDown() throws Exception {
+	}
+
+	@Test
+	public void testGetStanzaAdiacenteDirezioneBloccata() {
+		assertEquals(sb, sb.getStanzaAdiacente(Direzione.ovest));
 	}
 	
 	@Test
-	public void testgetStanzaAdiacente_StanzaSbloccata() {
-		Stanza sb  = new StanzaBloccata("StanzaBloccata", "nord", "Tool");
-		Stanza s = new Stanza("Stanza");
-		Attrezzo sbloccante = new Attrezzo("Tool", 1);
-		sb.impostaStanzaAdiacente("nord", s);
+	public void testGetStanzaAdiacenteDirezioneSbloccata() {
+		sb.addAttrezzo(a);
+		assertEquals(s, sb.getStanzaAdiacente(Direzione.ovest));
 		
-		sb.addAttrezzo(sbloccante);
-		assertEquals(s, sb.getStanzaAdiacente("nord"));
 	}
-	
+
 	@Test
-	public void testgetDescrizione_StanzaBloccata() {
-		Stanza sb  = new StanzaBloccata("StanzaBloccata", "nord", "Tool");
-		Stanza s = new Stanza("Stanza");
-		Attrezzo sbloccante = new Attrezzo("Tool", 1);
-		sb.impostaStanzaAdiacente("nord", s);
-		
-		String e = "Stanza bloccata nella direzione: nord"+"\nPrendi il Tool e posalo nella stanza";
-		assertEquals(e, sb.getDescrizione());
-	}
-	
-	@Test
-	public void testgetDescrizione_StanzaSbloccata() {
-		Stanza sb  = new StanzaBloccata("StanzaBloccata", "nord", "Tool");
-		Stanza s = new Stanza("Stanza");
-		Attrezzo sbloccante = new Attrezzo("Tool", 1);
-		sb.impostaStanzaAdiacente("nord", s);
-		
-		sb.addAttrezzo(sbloccante);
+	public void testGetDescrizioneDirezioneSbloccata() {
+		sb.addAttrezzo(a);
 		assertEquals(sb.toString(), sb.getDescrizione());
+	}
+	
+	@Test
+	public void testGetDescrizioneDirezioneBloccata() {
+		String e = "Stanza bloccata nella direzione: ovest"+"\nPrendi il grimaldello e posalo nella stanza";
+		assertEquals(e, sb.getDescrizione());
+		
 	}
 
 }

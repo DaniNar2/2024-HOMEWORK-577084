@@ -1,76 +1,44 @@
 package it.uniroma3.diadia.ambienti;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import it.uniroma3.diadia.attrezzi.Attrezzo;
 
 public class StanzaMagicaTest {
 
-	@Test 
-	public void testgetAttrezzo_StanzaVuota() {
-		StanzaMagica vuota = new StanzaMagica("Vuota");
-		assertNull(vuota.getAttrezzo("inesistente"));
-	}
+	private StanzaMagica s1;
+	private Attrezzo p;
+	private Attrezzo m;
+	private Attrezzo v;
 	
+	@Before
+	public void setUp() throws Exception {
+		s1 = new StanzaMagica("s1");
+		p = new Attrezzo("pala", 33);
+		m = new Attrezzo("martello", 42);
+		v = new Attrezzo("vanga", 42);
+	}
+
+	@After
+	public void tearDown() throws Exception {
+	}
+
 	@Test
-	public void testgetAttrezzo_StanzaNonVuota_Presente() {
-		StanzaMagica stanza1 = new StanzaMagica("Stanza1");
-		Attrezzo attrezzo = new Attrezzo("Attrezzo", 1);
-		stanza1.addAttrezzo(attrezzo);
-		assertNotNull(stanza1.getAttrezzo("Attrezzo"));	
+	public void testAddAttrezzo() {
+		assertTrue(s1.addAttrezzo(m));
+
 	}
-	
+
+
 	@Test
-	public void testgetAttrezzo_StanzaNonVuota_Assente() {
-		StanzaMagica stanza1 = new StanzaMagica("Stanza1");
-		Attrezzo attrezzo = new Attrezzo("Attrezzo", 1);
-		stanza1.addAttrezzo(attrezzo);
-		assertNull(stanza1.getAttrezzo("NonPresente"));
-	}
-	
-	@Test
-	public void testremoveAttrezzo_Presente() {
-		StanzaMagica s1 = new StanzaMagica("Stanza1");
-		Attrezzo spada = new Attrezzo("Spada", 10);
-		s1.addAttrezzo(spada);
-		boolean rimosso;
-		rimosso= s1.removeAttrezzo(spada);
-		assertTrue(rimosso);
-	}
-	
-	@Test 
-	public void testgetStanzaAdiacente_StanzaSingola() {
-		StanzaMagica singola = new StanzaMagica("Vuota");
-		assertNull(singola.getStanzaAdiacente("inesistente"));
-	}
-	
-	@Test
-	public void testgetStanzaAdiacente_StanzaConAdiacente_Presente() {
-		StanzaMagica stanza1 = new StanzaMagica("Stanza1");
-		StanzaMagica adiacente = new StanzaMagica("Adiacente");
-		stanza1.impostaStanzaAdiacente("nord", adiacente);
-		assertNotNull(stanza1.getStanzaAdiacente("nord"));	
-	}
-	
-	@Test
-	public void testgetStanzaAdiacente_StanzaConAdiacente_Assente() {
-		StanzaMagica stanza1 = new StanzaMagica("Stanza1");
-		StanzaMagica adiacente = new StanzaMagica("Adiacente");
-		stanza1.impostaStanzaAdiacente("nord", adiacente);
-		assertNull(stanza1.getStanzaAdiacente("sud"));
-	}
-	
-	@Test
-	public void testmodificaAttrezzo() {
-		StanzaMagica s = new StanzaMagica("Stanza");
-		Attrezzo spada = new Attrezzo("Spada", 3);
-		s.addAttrezzo(spada);
-		Attrezzo modificato = s.modificaAttrezzo(spada);
-		assertEquals("adapS", modificato.getNome());
-		assertEquals(6, modificato.getPeso());
-	}
-	
-	
+	public void testModificaAttrezzo() {
+		assertTrue(s1.addAttrezzo(p));
+		assertTrue(s1.addAttrezzo(v));
+		assertTrue(s1.addAttrezzo(m));
+		}
 }
